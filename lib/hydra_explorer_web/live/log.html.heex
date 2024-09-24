@@ -10,8 +10,25 @@
       </p>
     </div>
   </div>
-  <!-- Loop through the messages -->
+  <div>
+    <form phx-change="messages_filter">
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 my-5">
+        <%= for message_type <- @message_types do %>
+          <label class="flex items-center space-x-2">
+            <input
+              type="checkbox"
+              name="types_selected[]"
+              value={message_type}
+              checked={message_type in @types_selected}
+            />
+            <span><%= message_type %></span>
+          </label>
+        <% end %>
+      </div>
+    </form>
+  </div>
   <.pagination top={true} offset={@offset} limit={@limit} len={@messages_len} />
+  <!-- Loop through the messages -->
   <div class="space-y-4">
     <%= for message <- @messages do %>
       <div class="bg-white shadow overflow-hidden sm:rounded-lg">
