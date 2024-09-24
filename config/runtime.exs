@@ -20,6 +20,16 @@ if System.get_env("PHX_SERVER") do
   config :hydra_explorer, HydraExplorerWeb.Endpoint, server: true
 end
 
+hydra_node_url_env = System.get_env("HYDRA_NODE_URL")
+
+if hydra_node_url_env do
+  config :hydra_explorer, HydraExplorer, hydra_node_url: hydra_node_url_env
+end
+
+if System.get_env("DRY_RUN") do
+  config :hydra_explorer, HydraExplorer, dry?: true
+end
+
 if config_env() == :prod do
   database_url =
     System.get_env("DATABASE_URL") ||

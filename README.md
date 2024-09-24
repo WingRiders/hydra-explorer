@@ -2,6 +2,14 @@
 
 Parses and presents data from a hydra node. Also exposes an API endpoint to query the message log.
 
+## Running without a hydra node
+It's possible to run the application in a dry mode without an underlying hydra node connection. That might be useful to test the application out. To do that copy the seed database into the place of the actual one and set a DRY_RUN env variable:
+* cp priv/repo/seeds.dev.sqlite3 priv/repo/dev.sqlite3
+* cp priv/repo/seeds.dev.sqlite3-shm priv/repo/dev.sqlite3-shm
+* cp priv/repo/seeds.dev.sqlite3-wal priv/repo/dev.sqlite3-wal
+* mix deps.get
+* DRY_RUN=t mix phx.server
+
 ## Running the hydra node
 https://hydra.family/head-protocol/unstable/docs/tutorial/
 

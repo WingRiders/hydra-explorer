@@ -3,8 +3,8 @@ defmodule HydraExplorer.MessageStore do
 
   alias Phoenix.PubSub
 
-  def start_link(state) do
-    GenServer.start_link(__MODULE__, state, name: __MODULE__)
+  def start_link(opts) do
+    GenServer.start_link(__MODULE__, %{}, [name: __MODULE__] ++ opts)
   end
 
   def all() do

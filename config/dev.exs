@@ -27,6 +27,10 @@ config :hydra_explorer, HydraExplorerWeb.Endpoint,
     tailwind: {Tailwind, :install_and_run, [:default, ~w(--watch)]}
   ]
 
+config :hydra_explorer, HydraExplorer,
+  dry?: false,
+  hydra_node_url: "127.0.0.1:4001"
+
 # ## SSL Support
 #
 # In order to use HTTPS in development, a self-signed

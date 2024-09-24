@@ -2,12 +2,25 @@ defmodule HydraExplorer.Head do
   use WebSockex
 
   alias HydraExplorer.Message
+  alias HydraExplorer.MessageStore
+  alias HydraExplorer.Query
 
   require Logger
 
   def start_link(opts) do
-    url = Keyword.get(opts, :url)
-    WebSockex.start_link(url, __MODULE__, %{}, name: __MODULE__)
+    dry? = Keyword.get(opts, :dry?)
+
+    if dry? do
+      Enum.each(Query.messages_load(), &MessageStore.push/1)
+      GenServer.start_link(__MODULE__, %{}, [name: __MODULE__] ++ opts)
+    else
+      url = Keyword.get(opts, :url)
+      WebSockex.start_link(url, __MODULE__, %{}, name: __MODULE__)
+    end
+  end
+
+  def init(_) do
+    {:ok, %{}}
   end
 
   @impl true
@@ -26,7 +39,7 @@ defmodule HydraExplorer.Head do
       |> Recase.Enumerable.convert_keys(&Recase.to_snake/1)
       |> Message.decode_message()
 
-    if decoded, do: HydraExplorer.MessageStore.push(decoded)
+    if decoded, do: MessageStore.push(decoded)
     {:ok, state}
   end
 

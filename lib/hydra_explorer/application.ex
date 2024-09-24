@@ -7,6 +7,12 @@ defmodule HydraExplorer.Application do
 
   @impl true
   def start(_type, _args) do
+    config = Application.get_env(:hydra_explorer, HydraExplorer)
+    dry? = Keyword.get(config, :dry?)
+    hydra_node_url = Keyword.get(config, :hydra_node_url)
+    hydra_node_url_ws = "ws://" <> hydra_node_url
+    hydra_node_url_http = "http://" <> hydra_node_url
+
     children = [
       # Start the Telemetry supervisor
       HydraExplorerWeb.Telemetry,
@@ -18,9 +24,9 @@ defmodule HydraExplorer.Application do
       {Finch, name: HydraExplorer.Finch},
       # Start the Endpoint (http/https)
       HydraExplorerWeb.Endpoint,
-      {HydraExplorer.ProtocolParams, url: "http://127.0.0.1:4001"},
-      {HydraExplorer.MessageStore, %{}},
-      {HydraExplorer.Head, url: "ws://127.0.0.1:4001"}
+      {HydraExplorer.ProtocolParams, dry?: dry?, url: dbg(hydra_node_url_http)},
+      {HydraExplorer.MessageStore, dry?: dry?},
+      {HydraExplorer.Head, dry?: dry?, url: hydra_node_url_ws}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

@@ -30,3 +30,7 @@ config :logger, level: :warning
 
 # Initialize plugs at runtime for faster test compilation
 config :phoenix, :plug_init_mode, :runtime
+
+config :hydra_explorer, HydraExplorer,
+  dry?: true,
+  hydra_node_url: "127.0.0.1:4001"
