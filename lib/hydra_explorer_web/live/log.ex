@@ -9,16 +9,12 @@ defmodule HydraExplorerWeb.Log do
   def mount(_params, _session, socket) do
     if connected?(socket), do: PubSub.subscribe(HydraExplorer.PubSub, "hydra_head")
     messages = MessageStore.all()
-
     socket = assign(socket, messages: messages)
-
     {:ok, socket}
   end
 
   def handle_info({:all_messages, messages}, socket) do
-    socket =
-      assign(socket, messages: messages)
-
+    socket = assign(socket, messages: messages)
     {:noreply, socket}
   end
 end

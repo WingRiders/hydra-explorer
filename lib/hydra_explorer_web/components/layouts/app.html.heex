@@ -1,5 +1,14 @@
+<header class="bg-gray-800 text-white py-4">
+  <nav class="container mx-auto flex justify-between items-center">
+    <div class="flex space-x-4">
+      <.link href={~p"/committed"} class="btn text-white hover:bg-gray-700 px-3 py-2 rounded-md">Committed utxos</.link>
+      <.link href={~p"/log"} class="btn text-white hover:bg-gray-700 px-3 py-2 rounded-md">Log</.link>
+    </div>
+  </nav>
+</header>
+
 <main class="px-4 py-20 sm:px-6 lg:px-8">
-  <div class="mx-auto max-w-2xl">
+  <div class="mx-auto">
     <.flash_group flash={@flash} />
     <%= @inner_content %>
   </div>
