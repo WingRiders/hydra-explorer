@@ -2,10 +2,8 @@ import Config
 
 # Configure your database
 config :hydra_explorer, HydraExplorer.Repo,
-  username: "postgres",
-  password: "postgres",
-  hostname: "localhost",
-  database: "hydra_explorer_dev",
+  adapter: Ecto.Adapters.SQLite3,
+  database: "priv/repo/dev.sqlite3",
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10

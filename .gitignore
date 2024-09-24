@@ -25,6 +25,9 @@ erl_crash.dump
 # Ignore package tarball (built via "mix hex.build").
 hydra_explorer-*.tar
 
+# Ignore the dev database
+/priv/repo/dev.sqlite3*
+
 # Ignore assets that are produced by build tools.
 /priv/static/assets/
 
@@ -34,4 +37,3 @@ hydra_explorer-*.tar
 # In case you use Node.js/npm, you want to ignore these.
 npm-debug.log
 /assets/node_modules/
-
