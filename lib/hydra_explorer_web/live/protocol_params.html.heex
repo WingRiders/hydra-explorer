@@ -1,0 +1,110 @@
+<div class="bg-white shadow-md rounded-lg p-6">
+  <!-- Protocol Parameters Header -->
+  <h2 class="text-lg font-bold mb-4 text-gray-700">Protocol Parameters</h2>
+  <!-- Table for Protocol Parameters -->
+  <table class="min-w-full table-auto">
+    <tbody>
+      <!-- Collateral Percentage -->
+      <tr class="bg-gray-100 border-t">
+        <td class="px-6 py-3 text-sm font-medium text-gray-700">Collateral Percentage</td>
+        <td class="px-6 py-3 text-sm text-gray-900">
+          <%= @protocol_parameters["collateral_percentage"] %> %
+        </td>
+      </tr>
+      <!-- Execution Unit Prices -->
+      <tr class="border-t">
+        <td class="px-6 py-3 text-sm font-medium text-gray-700">Execution Unit Prices</td>
+        <td class="px-6 py-3 text-sm text-gray-900">
+          Memory: <%= @protocol_parameters["execution_unit_prices"]["price_memory"] %>,
+          Steps: <%= @protocol_parameters["execution_unit_prices"]["price_steps"] %>
+        </td>
+      </tr>
+      <!-- Max Block Sizes -->
+      <tr class="bg-gray-100 border-t">
+        <td class="px-6 py-3 text-sm font-medium text-gray-700">Max Block Sizes</td>
+        <td class="px-6 py-3 text-sm text-gray-900">
+          Body: <%= @protocol_parameters["max_block_body_size"] %> bytes,
+          Header: <%= @protocol_parameters["max_block_header_size"] %> bytes
+        </td>
+      </tr>
+      <!-- Max Block Execution Units -->
+      <tr class="border-t">
+        <td class="px-6 py-3 text-sm font-medium text-gray-700">Max Block Execution Units</td>
+        <td class="px-6 py-3 text-sm text-gray-900">
+          Memory: <%= @protocol_parameters["max_block_execution_units"]["memory"] %>,
+          Steps: <%= @protocol_parameters["max_block_execution_units"]["steps"] %>
+        </td>
+      </tr>
+      <!-- Max TX Execution Units -->
+      <tr class="bg-gray-100 border-t">
+        <td class="px-6 py-3 text-sm font-medium text-gray-700">Max TX Execution Units</td>
+        <td class="px-6 py-3 text-sm text-gray-900">
+          Memory: <%= @protocol_parameters["max_tx_execution_units"]["memory"] %>,
+          Steps: <%= @protocol_parameters["max_tx_execution_units"]["steps"] %>
+        </td>
+      </tr>
+      <!-- Max TX Size -->
+      <tr class="border-t">
+        <td class="px-6 py-3 text-sm font-medium text-gray-700">Max TX Size</td>
+        <td class="px-6 py-3 text-sm text-gray-900">
+          <%= @protocol_parameters["max_tx_size"] %> bytes
+        </td>
+      </tr>
+      <!-- UTXO Cost Per Byte -->
+      <tr class="bg-gray-100 border-t">
+        <td class="px-6 py-3 text-sm font-medium text-gray-700">UTXO Cost Per Byte</td>
+        <td class="px-6 py-3 text-sm text-gray-900">
+          <%= @protocol_parameters["utxo_cost_per_byte"] %>
+        </td>
+      </tr>
+      <!-- TODO: Cost Models, the current view isn't very useful -->
+      <tr class="border-t">
+        <td class="px-6 py-3 text-sm font-medium text-gray-700">Cost Models</td>
+        <td class="px-6 py-3 text-sm">
+          <div class="mt-2">
+            <%= for {model, costs} <- @protocol_parameters["cost_models"] do %>
+              <div class="bg-gray-100 p-4 rounded-lg shadow-sm mb-2">
+                <p class="font-semibold text-gray-700">
+                  <%= String.capitalize(to_string(model)) %>
+                </p>
+                <p class="text-sm text-gray-900 break-words">
+                  <%= Enum.join(costs, ", ") %>
+                </p>
+              </div>
+            <% end %>
+          </div>
+        </td>
+      </tr>
+      Other Parameters
+      <tr class="bg-gray-100 border-t">
+        <td class="px-6 py-3 text-sm font-medium text-gray-700">Other Parameters</td>
+        <td class="px-6 py-3 text-sm">
+          <ul>
+            <li>Max Collateral Inputs: <%= @protocol_parameters["max_collateral_inputs"] %></li>
+            <li>Min Pool Cost: <%= @protocol_parameters["min_pool_cost"] %></li>
+            <li>Monetary Expansion: <%= @protocol_parameters["monetary_expansion"] %></li>
+            <li>Pool Pledge Influence: <%= @protocol_parameters["pool_pledge_influence"] %></li>
+            <li>Pool Retire Max Epoch: <%= @protocol_parameters["pool_retire_max_epoch"] %></li>
+            <li>Stake Address Deposit: <%= @protocol_parameters["stake_address_deposit"] %></li>
+            <li>Stake Pool Deposit: <%= @protocol_parameters["stake_pool_deposit"] %></li>
+            <li>
+              Stake Pool Target Number: <%= @protocol_parameters["stake_pool_target_num"] %>
+            </li>
+            <li>Treasury Cut: <%= @protocol_parameters["treasury_cut"] %></li>
+            <li>Tx Fee Fixed: <%= @protocol_parameters["tx_fee_fixed"] %></li>
+            <li>Tx Fee Per Byte: <%= @protocol_parameters["tx_fee_per_byte"] %></li>
+          </ul>
+        </td>
+      </tr>
+      <!-- Protocol Version -->
+      <tr class="border-t">
+        <td class="px-6 py-3 text-sm font-medium text-gray-700">Protocol Version</td>
+        <td class="px-6 py-3 text-sm text-gray-900">
+          <%= @protocol_parameters["protocol_version"]["major"] %>.<%= @protocol_parameters[
+            "protocol_version"
+          ]["minor"] %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

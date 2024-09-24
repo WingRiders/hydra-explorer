@@ -19,6 +19,7 @@ defmodule HydraExplorerWeb.Router do
 
     get "/", PageController, :home
 
+    live "/protocol_params", ProtocolParams
     live "/committed", Committed
     live "/log", Log
     live "/peers", Peers
