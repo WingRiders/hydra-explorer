@@ -51,7 +51,8 @@ defmodule HydraExplorer.MixProject do
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
       {:websockex, "~> 0.4.3"},
-      {:recase, "~> 0.5"}
+      {:recase, "~> 0.5"},
+      {:erl_cbor, "~> 2.0"}
     ]
   end
 
