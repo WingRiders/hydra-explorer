@@ -21,6 +21,7 @@ defmodule HydraExplorerWeb.Router do
 
     live "/committed", Committed
     live "/log", Log
+    live "/peers", Peers
   end
 
   # Other scopes may use custom stacks.
