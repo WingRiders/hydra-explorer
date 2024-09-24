@@ -10,6 +10,7 @@ defmodule HydraExplorer.Query do
   end
 
   def messages_load() do
-    Repo.all(Message)
+    messages_db = Repo.all(Message)
+    Enum.map(messages_db, &Message.to_message/1)
   end
 end
