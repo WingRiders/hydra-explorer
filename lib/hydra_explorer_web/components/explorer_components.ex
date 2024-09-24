@@ -22,6 +22,19 @@ defmodule HydraExplorerWeb.ExplorerComponents do
       <p class="grid-col-2">
         <%= @out_index %>
       </p>
+      <p class="grid-col-1">Lovelace</p>
+      <p class="grid-col-2">
+        <%= @utxo_data["value"]["lovelace"] %>
+      </p>
+      <!-- Display other tokens -->
+      <%= for {asset_name, quantity} <- Map.drop(@utxo_data["value"], ["lovelace"]) do %>
+        <p class="grid-col-1">
+          <%= asset_name %>
+        </p>
+        <p class="grid-col-2">
+          <%= quantity %>
+        </p>
+      <% end %>
       <p class="grid-col-1">Address:</p>
       <p class="grid-col-2"><%= @utxo_data["address"] %></p>
       <p class="grid-col-1">Datum:</p>

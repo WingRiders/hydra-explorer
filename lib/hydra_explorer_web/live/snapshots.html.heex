@@ -1,0 +1,84 @@
+<div class="container mx-auto py-6 max-w-4xl">
+  <!-- Page Header -->
+  <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-6">
+    <div class="px-4 py-5 sm:px-6">
+      <h3 class="text-lg leading-6 font-medium text-gray-900">
+        Snapshots
+      </h3>
+      <p class="mt-1 max-w-2xl text-sm text-gray-500">
+        Displaying all snapshots confirmed by the Hydra node.
+      </p>
+    </div>
+  </div>
+  <!-- Loop through the snapshots -->
+  <div class="space-y-4">
+    <%= for snapshot <- @snapshots do %>
+      <div class="bg-white shadow-md rounded-lg p-6">
+        <!-- Snapshot Header -->
+        <h2 class="text-lg font-bold mb-4 text-gray-700">Snapshot Details</h2>
+        <!-- Timestamp -->
+        <div class="mb-4">
+          <h3 class="text-md font-bold text-gray-700">Timestamp</h3>
+          <p class="text-sm font-semibold text-gray-900"><%= snapshot.timestamp %></p>
+        </div>
+        <!-- Sequence Number -->
+        <div class="mb-4">
+          <h3 class="text-md font-bold text-gray-700">Sequence Number</h3>
+          <p class="text-sm font-semibold text-gray-900"><%= snapshot.seq %></p>
+        </div>
+        <!-- Head ID -->
+        <div class="mb-4">
+          <h3 class="text-md font-bold text-gray-700">Head id</h3>
+          <p class="text-sm font-semibold text-gray-900 break-words">
+            <%= snapshot.head_id %>
+          </p>
+        </div>
+        <!-- Snapshot Number -->
+        <div class="mb-4">
+          <h3 class="text-md font-bold text-gray-700">Snapshot Number</h3>
+          <p class="text-sm font-semibold text-gray-900">
+            <%= snapshot.snapshot["snapshot_number"] %>
+          </p>
+        </div>
+        <!-- Confirmed Transactions -->
+        <%= if snapshot.snapshot["confirmed_transactions"] != [] do %>
+          <div class="mb-4">
+            <h3 class="text-md font-bold text-gray-700">Confirmed Transactions</h3>
+            <ul>
+              <%= for tx <- snapshot.snapshot["confirmed_transactions"] do %>
+                <li class="text-sm font-semibold text-gray-900 break-words"><%= tx %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+        <!-- UTXO Details -->
+        <div class="mb-4">
+          <h3 class="text-md font-bold text-gray-700">UTXO Details</h3>
+          <div class="grid gap-4 grid-cols-1">
+            <%= for {utxo_id, utxo_data} <- snapshot.snapshot["utxo"] do %>
+              <.utxo_details utxo_id={utxo_id} utxo_data={utxo_data} />
+            <% end %>
+          </div>
+        </div>
+        <!-- UTXO to Decommit -->
+        <%= if snapshot.snapshot["utxo_to_decommit"] do %>
+          <div class="mb-4">
+            <h3 class="text-md font-bold text-gray-700">UTXO to Decommit</h3>
+            <div class="grid gap-4 grid-cols-1">
+              <%= for {utxo_id, utxo_data} <- snapshot.snapshot["utxo_to_decommit"] do %>
+                <.utxo_details utxo_id={utxo_id} utxo_data={utxo_data} />
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+        <!-- Version -->
+        <div class="mb-4">
+          <h3 class="text-md font-bold text-gray-700">Version</h3>
+          <p class="text-sm font-semibold text-gray-900">
+            <%= snapshot.snapshot["version"] %>
+          </p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
