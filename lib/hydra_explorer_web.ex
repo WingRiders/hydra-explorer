@@ -85,6 +85,7 @@ defmodule HydraExplorerWeb do
       import Phoenix.HTML
       # Core UI components and translation
       import HydraExplorerWeb.CoreComponents
+      import HydraExplorerWeb.ExplorerComponents
       import HydraExplorerWeb.Gettext
 
       # Shortcut for generating JS commands

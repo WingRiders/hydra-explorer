@@ -87,15 +87,7 @@
             <dd class="mt-1 text-sm text-gray-900">
               <div class="grid gap-4 grid-cols-1">
                 <%= for {utxo_id, utxo_data} <- commit.utxo do %>
-                  <div class="bg-gray-100 p-4 rounded-lg shadow-sm">
-                    <p class="font-semibold">UTXO ID: <%= utxo_id %></p>
-                    <p>Address: <%= utxo_data["address"] %></p>
-                    <p>Datum: <%= utxo_data["datum"] || "N/A" %></p>
-                    <p>Datum Hash: <%= utxo_data["datumhash"] || "N/A" %></p>
-                    <p>
-                      Reference Script: <%= utxo_data["referenceScript"] || "N/A" %>
-                    </p>
-                  </div>
+                  <.utxo_details utxo_id={utxo_id} utxo_data={utxo_data} />
                 <% end %>
               </div>
             </dd>
