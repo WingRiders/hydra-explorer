@@ -16,6 +16,7 @@
       <div class="bg-white shadow overflow-hidden sm:rounded-lg">
         <div class="px-4 py-5 sm:px-6">
           <h4 class="text-lg font-semibold text-gray-900">Log Entry</h4>
+          <p class="text-lg font-fm text-gray-500"><%= message.__struct__ |> Module.split() |> List.last() %></p>
           <pre class="break-words whitespace-pre-wrap mt-2 bg-gray-100 p-4 rounded-lg text-sm text-gray-700 text">
             <%= Jason.encode_to_iodata!(
               message
