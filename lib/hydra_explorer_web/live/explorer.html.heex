@@ -1,0 +1,107 @@
+<div class="container mx-auto py-6">
+  <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+    <div class="px-4 py-5 sm:px-6">
+      <h3 class="text-lg leading-6 font-medium text-gray-900">
+        Committed utxos
+      </h3>
+      <p class="mt-1 max-w-2xl text-sm text-gray-500">
+        View details of the Hydra committed utxos.
+      </p>
+    </div>
+
+    <div class="border-t border-gray-200">
+      <!-- Loop through the commits -->
+      <%= for commit <- @messages_committed do %>
+        <dl>
+          <!-- Commit metadata (timestamp, type, etc.) -->
+          <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt class="text-sm font-medium text-gray-500">Timestamp</dt>
+            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+              <%= commit.timestamp %>
+            </dd>
+          </div>
+          <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt class="text-sm font-medium text-gray-500">Sequence</dt>
+            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+              <%= commit.seq %>
+            </dd>
+          </div>
+          <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt class="text-sm font-medium text-gray-500">Party vKey</dt>
+            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+              <%= commit.party["vkey"] %>
+            </dd>
+          </div>
+          <!-- Transferred Values (Lovelace and other tokens) -->
+          <div class="bg-gray-50 px-4 py-5 sm:px-6">
+            <dt class="text-sm font-medium text-gray-500">Transferred Value</dt>
+            <dd class="mt-1 text-sm text-gray-900">
+              <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                  <tr>
+                    <th
+                      scope="col"
+                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Asset
+                    </th>
+                    <th
+                      scope="col"
+                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Amount
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                  <!-- Loop through each UTXO -->
+                  <%= for {_, utxo_data} <- commit.utxo do %>
+                    <!-- Display Lovelace -->
+                    <tr>
+                      <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        Lovelace
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        <%= utxo_data["value"]["lovelace"] %>
+                      </td>
+                    </tr>
+                    <!-- Display other tokens -->
+                    <%= for {asset_name, quantity} <- Map.drop(utxo_data["value"], ["lovelace"]) do %>
+                      <tr>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                          <%= asset_name %>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          <%= quantity %>
+                        </td>
+                      </tr>
+                    <% end %>
+                  <% end %>
+                </tbody>
+              </table>
+            </dd>
+          </div>
+          <!-- UTXO Details -->
+          <div class="bg-white px-4 py-5 sm:px-6">
+            <dt class="text-sm font-medium text-gray-500">UTXO Details</dt>
+            <dd class="mt-1 text-sm text-gray-900">
+              <div class="grid gap-4 grid-cols-1">
+                <%= for {utxo_id, utxo_data} <- commit.utxo do %>
+                  <div class="bg-gray-100 p-4 rounded-lg shadow-sm">
+                    <p class="font-semibold">UTXO ID: <%= utxo_id %></p>
+                    <p>Address: <%= utxo_data["address"] %></p>
+                    <p>Datum: <%= utxo_data["datum"] || "N/A" %></p>
+                    <p>Datum Hash: <%= utxo_data["datumhash"] || "N/A" %></p>
+                    <p>
+                      Reference Script: <%= utxo_data["referenceScript"] || "N/A" %>
+                    </p>
+                  </div>
+                <% end %>
+              </div>
+            </dd>
+          </div>
+        </dl>
+      <% end %>
+    </div>
+  </div>
+</div>

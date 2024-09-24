@@ -17,14 +17,14 @@ defmodule HydraExplorer.Application do
       # Start Finch
       {Finch, name: HydraExplorer.Finch},
       # Start the Endpoint (http/https)
-      HydraExplorerWeb.Endpoint
-      # Start a worker by calling: HydraExplorer.Worker.start_link(arg)
-      # {HydraExplorer.Worker, arg}
+      HydraExplorerWeb.Endpoint,
+      {HydraExplorer.MessageStore, %{}},
+      {HydraExplorer.Head, %{}}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
-    opts = [strategy: :one_for_one, name: HydraExplorer.Supervisor]
+    opts = [strategy: :rest_for_one, name: HydraExplorer.Supervisor]
     Supervisor.start_link(children, opts)
   end
 
