@@ -25,7 +25,7 @@ defmodule HydraExplorerWeb.Transactions do
 
   defp as_transactions(messages) do
     Enum.map(messages, fn m ->
-      Tx.from_cbor(m.transaction["cbor_hex"])
+      %{data: Tx.from_cbor(m.transaction["cbor_hex"]), id: m.transaction["tx_id"]}
     end)
   end
 

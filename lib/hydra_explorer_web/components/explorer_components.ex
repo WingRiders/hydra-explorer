@@ -18,7 +18,7 @@ defmodule HydraExplorerWeb.ExplorerComponents do
       <p class="grid-col-2">
         <%= @tx_id %>
       </p>
-      <p class="font-semibold grid-col-1">Output index:</p>
+      <p class="font-semibold grid-col-1">Index:</p>
       <p class="grid-col-2">
         <%= @out_index %>
       </p>
@@ -33,7 +33,7 @@ defmodule HydraExplorerWeb.ExplorerComponents do
       <p class="grid-col-1">
         Reference Script:
       </p>
-      <p class="grid-col-2"><%= @utxo_data["referenceScript"] || "N/A" %></p>
+      <p class="grid-col-2"><%= @utxo_data["reference_script"] || "N/A" %></p>
     </div>
     """
   end
@@ -41,18 +41,21 @@ defmodule HydraExplorerWeb.ExplorerComponents do
   def tx_details(assigns) do
     ~H"""
     <div class="bg-white shadow-md rounded-lg p-6">
-      <h2 class="text-lg font-bold mb-6 text-gray-700">Transaction Overview</h2>
+      <div class="mb-6">
+        <h2 class="text-lg font-bold text-gray-700">Transaction</h2>
+        <p class="text-sm font-semibold text-gray-900 break-words"><%= @id %></p>
+      </div>
       <!-- Transaction Inputs and Outputs -->
       <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
         <!-- Inputs Section -->
         <div>
           <h3 class="text-md font-bold mb-2 text-gray-700">Inputs</h3>
           <div class="border border-gray-300 rounded-lg">
-            <%= for input <- @tx["body"]["inputs"] do %>
+            <%= for input <- @data["body"]["inputs"] do %>
               <div class="p-4 border-b border-gray-300">
                 <p class="text-sm text-gray-600">
-                  Tx ID:
-                  <span class="font-semibold text-gray-900 break-words whitespace-pre-wrap">
+                  Tx id:
+                  <span class="font-semibold text-gray-900 break-words">
                     <%= input["transaction_id"] %>
                   </span>
                 </p>
@@ -67,11 +70,14 @@ defmodule HydraExplorerWeb.ExplorerComponents do
         <div>
           <h3 class="text-md font-bold mb-2 text-gray-700">Outputs</h3>
           <div class="border border-gray-300 rounded-lg">
-            <%= for output <- @tx["body"]["outputs"] do %>
+            <%= for {output, index} <- Enum.with_index(@data["body"]["outputs"]) do %>
               <div class="p-4 border-b border-gray-300">
                 <p class="text-sm text-gray-600">
+                  Index: <span class="font-semibold text-gray-900"><%= index %></span>
+                </p>
+                <p class="text-sm text-gray-600">
                   Address:
-                  <span class="font-semibold text-gray-900 break-words whitespace-pre-wrap">
+                  <span class="font-semibold text-gray-900 break-words">
                     <%= output["address"] %>
                   </span>
                 </p>
@@ -86,36 +92,92 @@ defmodule HydraExplorerWeb.ExplorerComponents do
           </div>
         </div>
       </div>
-      <!-- Additional Details -->
+      <!-- Collateral and Mint Details -->
       <div class="mt-6">
-        <h3 class="text-md font-bold mb-2 text-gray-700">Transaction Details</h3>
+        <h3 class="text-md font-bold mb-2 text-gray-700">Collateral and Mint Details</h3>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div class="bg-gray-100 p-4 rounded-lg shadow-sm">
-            <p class="text-sm text-gray-600">Transaction Fee:</p>
-            <p class="font-semibold text-gray-900"><%= @tx["body"]["fee"] %> lovelace</p>
+            <p class="text-sm text-gray-600">Collateral:</p>
+            <%= if @data["body"]["collateral"] do %>
+              <ul>
+                <%= for collateral <- @data["body"]["collateral"] do %>
+                  <li>
+                    Tx id: <span class="break-words"><%= collateral["transaction_id"] %></span>
+                    - Index: <%= collateral["index"] %>
+                  </li>
+                <% end %>
+              </ul>
+            <% else %>
+              <p>None</p>
+            <% end %>
           </div>
 
           <div class="bg-gray-100 p-4 rounded-lg shadow-sm">
-            <p class="text-sm text-gray-600">Signatures:</p>
-            <ul>
-              <%= for sig <- @tx["witness_set"]["vkeys"] do %>
-                <li class="mt-2">
-                  <p class="text-sm text-gray-600">
-                    VKey:
-                    <span class="font-semibold text-gray-900 break-words whitespace-pre-wrap">
-                      <%= sig["vkey"] %>
-                    </span>
-                  </p>
-                  <p class="text-sm text-gray-600">
-                    Signature:
-                    <span class="font-semibold text-gray-900 break-words whitespace-pre-wrap">
-                      <%= sig["signature"] %>
-                    </span>
-                  </p>
-                </li>
-              <% end %>
-            </ul>
+            <p class="text-sm text-gray-600">Mint:</p>
+            <%= if @data["body"]["mint"] do %>
+              <ul>
+                <%= for {policy_id, assets} <- @data["body"]["mint"] do %>
+                  <li>
+                    <p>Policy id: <span class="break-words"><%= policy_id %></span></p>
+                    <ul>
+                      <%= for {asset_name, amount} <- assets do %>
+                        <li>Asset: <%= asset_name %> - Amount: <%= amount %></li>
+                      <% end %>
+                    </ul>
+                  </li>
+                <% end %>
+              </ul>
+            <% else %>
+              <p>None</p>
+            <% end %>
           </div>
+        </div>
+      </div>
+      <!-- Script Data and Auxiliary Data -->
+      <div class="mt-6">
+        <h3 class="text-md font-bold mb-2 text-gray-700">Script and Auxiliary Data</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-gray-100 p-4 rounded-lg shadow-sm">
+            <p class="text-sm text-gray-600">Script Data Hash:</p>
+            <%= if @data["body"]["script_data_hash"] do %>
+              <p class="break-words"><%= @data["body"]["script_data_hash"] %></p>
+            <% else %>
+              <p>None</p>
+            <% end %>
+          </div>
+
+          <div class="bg-gray-100 p-4 rounded-lg shadow-sm">
+            <p class="text-sm text-gray-600">Auxiliary Data Hash:</p>
+            <%= if @data["body"]["auxiliary_data_hash"] do %>
+              <p class="break-words"><%= @data["body"]["auxiliary_data_hash"] %></p>
+            <% else %>
+              <p>None</p>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <!-- Witness Section (Signatures, etc.) -->
+      <div class="mt-6">
+        <h3 class="text-md font-bold mb-2 text-gray-700">Witnesses</h3>
+        <div class="border border-gray-300 rounded-lg p-4">
+          <%= if @data["witness_set"]["vkeys"] do %>
+            <%= for witness <- @data["witness_set"]["vkeys"] do %>
+              <div class="mb-4">
+                <p class="text-sm text-gray-600">
+                  VKey:
+                  <span class="font-semibold text-gray-900 break-words"><%= witness["vkey"] %></span>
+                </p>
+                <p class="text-sm text-gray-600">
+                  Signature:
+                  <span class="font-semibold text-gray-900 break-words">
+                    <%= witness["signature"] %>
+                  </span>
+                </p>
+              </div>
+            <% end %>
+          <% else %>
+            <p>None</p>
+          <% end %>
         </div>
       </div>
     </div>
