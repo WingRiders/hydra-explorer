@@ -6,8 +6,9 @@ import Config
 # to provide built-in test partitioning in CI environment.
 # Run `mix help test` for more information.
 config :hydra_explorer, HydraExplorer.Repo,
+  pool: Ecto.Adapters.SQL.Sandbox,
   adapter: Ecto.Adapters.SQLite3,
-  database: "priv/repo/dev.sqlite3",
+  database: "priv/repo/test.dev.sqlite3",
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
