@@ -21,6 +21,5 @@ defmodule HydraExplorerWeb.Snapshots do
     Enum.filter(messages, fn m ->
       m.__struct__ == Message.SnapshotConfirmed
     end)
-    |> dbg
   end
 end

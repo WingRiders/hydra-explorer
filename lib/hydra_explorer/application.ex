@@ -24,7 +24,7 @@ defmodule HydraExplorer.Application do
       {Finch, name: HydraExplorer.Finch},
       # Start the Endpoint (http/https)
       HydraExplorerWeb.Endpoint,
-      {HydraExplorer.ProtocolParams, dry?: dry?, url: dbg(hydra_node_url_http)},
+      {HydraExplorer.ProtocolParams, dry?: dry?, url: hydra_node_url_http},
       {HydraExplorer.MessageStore, dry?: dry?},
       {HydraExplorer.Head, dry?: dry?, url: hydra_node_url_ws}
     ]
