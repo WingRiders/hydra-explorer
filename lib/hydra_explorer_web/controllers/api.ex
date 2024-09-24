@@ -1,7 +1,13 @@
-defmodule HydraExplorerWeb.MessagesController do
+defmodule HydraExplorerWeb.ApiController do
   use HydraExplorerWeb, :controller
 
   alias HydraExplorer.MessageStore
+  alias HydraExplorer.ProtocolParams
+
+  def protocol_parameters(conn, _params) do
+    protocol_params = ProtocolParams.get()
+    json(conn, %{protocol_parameters: protocol_params})
+  end
 
   def messages(conn, _params) do
     messages =

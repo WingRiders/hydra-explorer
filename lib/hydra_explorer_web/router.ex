@@ -30,7 +30,8 @@ defmodule HydraExplorerWeb.Router do
   # Other scopes may use custom stacks.
   scope "/api", HydraExplorerWeb do
     pipe_through :api
-    get "/messages", MessagesController, :messages
+    get "/messages", ApiController, :messages
+    get "/protocol-parameters", ApiController, :protocol_parameters
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
