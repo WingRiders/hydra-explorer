@@ -51,6 +51,9 @@ defmodule HydraExplorerWeb.ExplorerComponents do
     """
   end
 
+  attr :id, :string, required: true
+  attr :data, :map, required: true
+
   def tx_details(assigns) do
     ~H"""
     <div class="bg-white shadow-md rounded-lg p-6">
@@ -193,6 +196,52 @@ defmodule HydraExplorerWeb.ExplorerComponents do
           <% end %>
         </div>
       </div>
+    </div>
+    """
+  end
+
+  attr :offset, :integer, required: true
+  attr :limit, :integer, required: true
+  attr :len, :integer, required: true
+  attr :top, :boolean, required: true
+
+  def pagination(assigns) do
+    ~H"""
+    <div
+      id={if @top, do: "pagination-container-top", else: "pagination-container-bottom"}
+      phx-hook="scrollToTopHook"
+      class={if @top, do: "flex justify-between mb-4", else: "flex justify-between mt-4"}
+    >
+      <!-- Previous Button -->
+      <button
+        type="button"
+        class={
+          if @offset == 0,
+            do: "bg-gray-300 text-gray-500 py-2 px-4 rounded cursor-not-allowed",
+            else: "bg-gray-300 hover:bg-gray-400 text-gray-700 font-bold py-2 px-4 rounded"
+        }
+        phx-click="prev_page"
+        disabled={@offset == 0}
+      >
+        Previous
+      </button>
+      <!-- Pagination Info -->
+      <span class="text-sm text-gray-600">
+        Showing <%= @offset + 1 %> to <%= min(@offset + @limit, @len) %> of <%= @len %>
+      </span>
+      <!-- Next Button -->
+      <button
+        type="button"
+        class={
+          if @offset + @limit >= @len,
+            do: "bg-gray-300 text-gray-500 py-2 px-4 rounded cursor-not-allowed",
+            else: "bg-gray-300 hover:bg-gray-400 text-gray-700 font-bold py-2 px-4 rounded"
+        }
+        phx-click="next_page"
+        disabled={@offset + @limit >= @len}
+      >
+        Next
+      </button>
     </div>
     """
   end

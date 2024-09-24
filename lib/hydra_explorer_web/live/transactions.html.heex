@@ -11,9 +11,11 @@
     </div>
   </div>
   <!-- Loop through the transactions -->
+  <.pagination top={true} offset={@offset} limit={@limit} len={@transactions_len} />
   <div class="space-y-4">
     <%= for tx <- @transactions do %>
       <.tx_details id={tx.id} data={tx.data} />
     <% end %>
   </div>
+  <.pagination top={false} offset={@offset} limit={@limit} len={@transactions_len} />
 </div>

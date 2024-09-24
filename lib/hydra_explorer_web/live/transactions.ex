@@ -10,10 +10,40 @@ defmodule HydraExplorerWeb.Transactions do
     if connected?(socket), do: PubSub.subscribe(HydraExplorer.PubSub, "hydra_head")
     messages = MessageStore.all()
 
+    limit = 10
+    offset = 0
+    transactions = messages |> messages_tx_valid() |> as_transactions()
+
     socket =
-      assign(socket, transactions: messages |> messages_tx_valid() |> as_transactions())
+      assign(socket,
+        transactions_all: transactions,
+        transactions: Enum.take(transactions, limit),
+        transactions_len: length(transactions),
+        offset: offset,
+        limit: limit
+      )
 
     {:ok, socket}
+  end
+
+  def handle_event("prev_page", _params, socket) do
+    new_offset = max(socket.assigns.offset - socket.assigns.limit, 0)
+
+    transactions =
+      socket.assigns.transactions_all |> Enum.drop(new_offset) |> Enum.take(socket.assigns.limit)
+
+    socket = assign(socket, offset: new_offset, transactions: transactions)
+    {:noreply, socket}
+  end
+
+  def handle_event("next_page", _params, socket) do
+    new_offset = min(socket.assigns.offset + socket.assigns.limit, socket.assigns.messages_len)
+
+    transactions =
+      socket.assigns.transactions_all |> Enum.drop(new_offset) |> Enum.take(socket.assigns.limit)
+
+    socket = assign(socket, offset: new_offset, transactions: transactions)
+    {:noreply, socket}
   end
 
   def handle_info({:all_messages, messages}, socket) do

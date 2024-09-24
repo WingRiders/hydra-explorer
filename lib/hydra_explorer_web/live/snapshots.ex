@@ -8,8 +8,41 @@ defmodule HydraExplorerWeb.Snapshots do
   def mount(_params, _session, socket) do
     if connected?(socket), do: PubSub.subscribe(HydraExplorer.PubSub, "hydra_head")
     messages = MessageStore.all()
-    socket = assign(socket, snapshots: messages_snapshots(messages))
+
+    limit = 10
+    offset = 0
+    snapshots = messages_snapshots(messages)
+
+    socket =
+      assign(socket,
+        snapshots_all: snapshots,
+        snapshots_len: length(snapshots),
+        snapshots: Enum.take(snapshots, limit),
+        offset: offset,
+        limit: limit
+      )
+
     {:ok, socket}
+  end
+
+  def handle_event("prev_page", _params, socket) do
+    new_offset = max(socket.assigns.offset - socket.assigns.limit, 0)
+
+    snapshots =
+      socket.assigns.snapshots_all |> Enum.drop(new_offset) |> Enum.take(socket.assigns.limit)
+
+    socket = assign(socket, offset: new_offset, snapshots: snapshots)
+    {:noreply, socket}
+  end
+
+  def handle_event("next_page", _params, socket) do
+    new_offset = min(socket.assigns.offset + socket.assigns.limit, socket.assigns.messages_len)
+
+    snapshots =
+      socket.assigns.snapshots_all |> Enum.drop(new_offset) |> Enum.take(socket.assigns.limit)
+
+    socket = assign(socket, offset: new_offset, snapshots: snapshots)
+    {:noreply, socket}
   end
 
   def handle_info({:all_messages, messages}, socket) do
