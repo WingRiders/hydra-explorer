@@ -19,7 +19,8 @@ defmodule HydraExplorerWeb.Router do
 
     get "/", PageController, :home
 
-    live "/log", Explorer
+    live "/committed", Committed
+    live "/log", Log
   end
 
   # Other scopes may use custom stacks.

@@ -1,4 +1,4 @@
-defmodule HydraExplorerWeb.Explorer do
+defmodule HydraExplorerWeb.Committed do
   use HydraExplorerWeb, :live_view
 
   require Logger
