@@ -10,7 +10,7 @@ defmodule HydraExplorerWeb.ApiController do
 
   def protocol_params(conn, _params) do
     protocol_params = ProtocolParams.get()
-    json(conn, %{protocol_parameters: protocol_params})
+    json(conn, %{protocol_params: protocol_params})
   end
 
   def peers(conn, _params) do
