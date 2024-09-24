@@ -5,8 +5,9 @@ defmodule HydraExplorer.Head do
 
   require Logger
 
-  def start_link(state) do
-    WebSockex.start_link("ws://127.0.0.1:4001", __MODULE__, state, name: __MODULE__)
+  def start_link(opts) do
+    url = Keyword.get(opts, :url)
+    WebSockex.start_link(url, __MODULE__, %{}, name: __MODULE__)
   end
 
   @impl true

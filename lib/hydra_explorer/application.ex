@@ -20,7 +20,7 @@ defmodule HydraExplorer.Application do
       HydraExplorerWeb.Endpoint,
       {HydraExplorer.ProtocolParams, url: "http://127.0.0.1:4001"},
       {HydraExplorer.MessageStore, %{}},
-      {HydraExplorer.Head, %{}}
+      {HydraExplorer.Head, url: "ws://127.0.0.1:4001"}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
