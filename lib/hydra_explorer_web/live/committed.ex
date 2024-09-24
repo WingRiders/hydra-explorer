@@ -56,7 +56,7 @@ defmodule HydraExplorerWeb.Committed do
     {:noreply, socket}
   end
 
-  defp messages_committed(messages) do
+  def messages_committed(messages) do
     Enum.filter(messages, fn m -> m.__struct__ == Message.Committed end)
   end
 end

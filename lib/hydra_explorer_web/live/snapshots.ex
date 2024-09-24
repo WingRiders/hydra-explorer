@@ -50,7 +50,7 @@ defmodule HydraExplorerWeb.Snapshots do
     {:noreply, socket}
   end
 
-  defp messages_snapshots(messages) do
+  def messages_snapshots(messages) do
     Enum.filter(messages, fn m ->
       m.__struct__ == Message.SnapshotConfirmed
     end)

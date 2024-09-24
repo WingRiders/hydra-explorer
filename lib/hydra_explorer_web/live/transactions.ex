@@ -53,13 +53,13 @@ defmodule HydraExplorerWeb.Transactions do
     {:noreply, socket}
   end
 
-  defp as_transactions(messages) do
+  def as_transactions(messages) do
     Enum.map(messages, fn m ->
       %{data: Tx.from_cbor(m.transaction["cbor_hex"]), id: m.transaction["tx_id"]}
     end)
   end
 
-  defp messages_tx_valid(messages) do
+  def messages_tx_valid(messages) do
     Enum.filter(messages, fn m ->
       m.__struct__ == Message.TxValid
     end)

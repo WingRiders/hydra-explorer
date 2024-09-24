@@ -32,6 +32,10 @@ defmodule HydraExplorerWeb.Router do
     pipe_through :api
     get "/messages", ApiController, :messages
     get "/protocol-parameters", ApiController, :protocol_parameters
+    get "/peers", ApiController, :peers
+    get "/snapshots", ApiController, :snapshots
+    get "/transactions", ApiController, :transactions
+    get "/committed", ApiController, :committed
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development

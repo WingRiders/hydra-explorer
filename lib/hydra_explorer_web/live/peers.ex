@@ -17,7 +17,7 @@ defmodule HydraExplorerWeb.Peers do
     {:noreply, socket}
   end
 
-  defp peers_connected(connected_messages) do
+  def peers_connected(connected_messages) do
     Enum.reduce(Enum.reverse(connected_messages), %{}, &reduce_peer_message/2)
   end
 
@@ -29,7 +29,7 @@ defmodule HydraExplorerWeb.Peers do
     Map.drop(state, [msg.peer])
   end
 
-  defp messages_peers(messages) do
+  def messages_peers(messages) do
     Enum.filter(messages, fn m ->
       m.__struct__ == Message.PeerConnected or m.__struct__ == Message.PeerDisconnected
     end)

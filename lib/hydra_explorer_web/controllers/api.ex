@@ -3,10 +3,40 @@ defmodule HydraExplorerWeb.ApiController do
 
   alias HydraExplorer.MessageStore
   alias HydraExplorer.ProtocolParams
+  alias HydraExplorerWeb.Peers
+  alias HydraExplorerWeb.Snapshots
+  alias HydraExplorerWeb.Transactions
+  alias HydraExplorerWeb.Committed
 
   def protocol_parameters(conn, _params) do
     protocol_params = ProtocolParams.get()
     json(conn, %{protocol_parameters: protocol_params})
+  end
+
+  def peers(conn, _params) do
+    peers = MessageStore.all() |> Peers.messages_peers() |> Peers.peers_connected()
+    json(conn, %{peers: peers})
+  end
+
+  def snapshots(conn, _params) do
+    snapshots =
+      MessageStore.all() |> Snapshots.messages_snapshots() |> Enum.map(&Map.from_struct/1)
+
+    json(conn, %{snapshots: snapshots})
+  end
+
+  def transactions(conn, _params) do
+    transactions =
+      MessageStore.all() |> Transactions.messages_tx_valid() |> Transactions.as_transactions()
+
+    json(conn, %{transactions: transactions})
+  end
+
+  def committed(conn, _params) do
+    committed =
+      MessageStore.all() |> Committed.messages_committed() |> Enum.map(&Map.from_struct/1)
+
+    json(conn, %{committed: committed})
   end
 
   def messages(conn, _params) do
