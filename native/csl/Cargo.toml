@@ -1,0 +1,14 @@
+[package]
+name = "csl"
+version = "0.1.0"
+authors = []
+edition = "2021"
+
+[lib]
+name = "csl"
+path = "src/lib.rs"
+crate-type = ["cdylib"]
+
+[dependencies]
+cardano-serialization-lib = "12.1.0"
+rustler = "0.34.0"

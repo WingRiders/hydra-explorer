@@ -1,0 +1,19 @@
+<div class="container mx-auto py-6 max-w-4xl">
+  <!-- Page Header -->
+  <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-6">
+    <div class="px-4 py-5 sm:px-6">
+      <h3 class="text-lg leading-6 font-medium text-gray-900">
+        Transactions
+      </h3>
+      <p class="mt-1 max-w-2xl text-sm text-gray-500">
+        Displaying all valid transactions on the hydra node.
+      </p>
+    </div>
+  </div>
+  <!-- Loop through the transactions -->
+  <div class="space-y-4">
+    <%= for tx <- @transactions do %>
+      <.tx_details tx={tx} />
+    <% end %>
+  </div>
+</div>

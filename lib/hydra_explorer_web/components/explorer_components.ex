@@ -37,4 +37,88 @@ defmodule HydraExplorerWeb.ExplorerComponents do
     </div>
     """
   end
+
+  def tx_details(assigns) do
+    ~H"""
+    <div class="bg-white shadow-md rounded-lg p-6">
+      <h2 class="text-lg font-bold mb-6 text-gray-700">Transaction Overview</h2>
+      <!-- Transaction Inputs and Outputs -->
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <!-- Inputs Section -->
+        <div>
+          <h3 class="text-md font-bold mb-2 text-gray-700">Inputs</h3>
+          <div class="border border-gray-300 rounded-lg">
+            <%= for input <- @tx["body"]["inputs"] do %>
+              <div class="p-4 border-b border-gray-300">
+                <p class="text-sm text-gray-600">
+                  Tx ID:
+                  <span class="font-semibold text-gray-900 break-words whitespace-pre-wrap">
+                    <%= input["transaction_id"] %>
+                  </span>
+                </p>
+                <p class="text-sm text-gray-600">
+                  Index: <span class="font-semibold text-gray-900"><%= input["index"] %></span>
+                </p>
+              </div>
+            <% end %>
+          </div>
+        </div>
+        <!-- Outputs Section -->
+        <div>
+          <h3 class="text-md font-bold mb-2 text-gray-700">Outputs</h3>
+          <div class="border border-gray-300 rounded-lg">
+            <%= for output <- @tx["body"]["outputs"] do %>
+              <div class="p-4 border-b border-gray-300">
+                <p class="text-sm text-gray-600">
+                  Address:
+                  <span class="font-semibold text-gray-900 break-words whitespace-pre-wrap">
+                    <%= output["address"] %>
+                  </span>
+                </p>
+                <p class="text-sm text-gray-600">
+                  Amount:
+                  <span class="font-semibold text-gray-900">
+                    <%= output["amount"]["coin"] %> lovelace
+                  </span>
+                </p>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <!-- Additional Details -->
+      <div class="mt-6">
+        <h3 class="text-md font-bold mb-2 text-gray-700">Transaction Details</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-gray-100 p-4 rounded-lg shadow-sm">
+            <p class="text-sm text-gray-600">Transaction Fee:</p>
+            <p class="font-semibold text-gray-900"><%= @tx["body"]["fee"] %> lovelace</p>
+          </div>
+
+          <div class="bg-gray-100 p-4 rounded-lg shadow-sm">
+            <p class="text-sm text-gray-600">Signatures:</p>
+            <ul>
+              <%= for sig <- @tx["witness_set"]["vkeys"] do %>
+                <li class="mt-2">
+                  <p class="text-sm text-gray-600">
+                    VKey:
+                    <span class="font-semibold text-gray-900 break-words whitespace-pre-wrap">
+                      <%= sig["vkey"] %>
+                    </span>
+                  </p>
+                  <p class="text-sm text-gray-600">
+                    Signature:
+                    <span class="font-semibold text-gray-900 break-words whitespace-pre-wrap">
+                      <%= sig["signature"] %>
+                    </span>
+                  </p>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    """
+  end
 end
