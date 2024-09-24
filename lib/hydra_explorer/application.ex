@@ -18,6 +18,7 @@ defmodule HydraExplorer.Application do
       {Finch, name: HydraExplorer.Finch},
       # Start the Endpoint (http/https)
       HydraExplorerWeb.Endpoint,
+      {HydraExplorer.ProtocolParams, url: "http://127.0.0.1:4001"},
       {HydraExplorer.MessageStore, %{}},
       {HydraExplorer.Head, %{}}
     ]
