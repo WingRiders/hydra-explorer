@@ -8,7 +8,7 @@ defmodule HydraExplorerWeb.ApiController do
   alias HydraExplorerWeb.Transactions
   alias HydraExplorerWeb.Committed
 
-  def protocol_parameters(conn, _params) do
+  def protocol_params(conn, _params) do
     protocol_params = ProtocolParams.get()
     json(conn, %{protocol_parameters: protocol_params})
   end
@@ -39,7 +39,7 @@ defmodule HydraExplorerWeb.ApiController do
     json(conn, %{committed: committed})
   end
 
-  def messages(conn, _params) do
+  def log(conn, _params) do
     messages =
       MessageStore.all()
       |> Enum.map(fn m ->
