@@ -2,29 +2,38 @@
 
 ## Table of Contents
 
-- [Introduction](#introduction)  
+- [Introduction](#introduction)
   An overview of the project, outlining the problems it addresses, the current inconveniences in the current system, and how this tool supports the developers.
 
-- [Running a Hydra Node](#running-a-hydra-node)  
+- [Running a Hydra Node](#running-a-hydra-node)
   Steps to set up and operate a Hydra node.
 
-- [Running the application](#running-the-application)  
+- [Running the application](#running-the-application)
   Commands to start the Hydra Explorer project.
 
-- [Running without a Hydra Node](#running-without-a-hydra-node)  
+- [Running without a Hydra Node](#running-without-a-hydra-node)
   In case, you want to test out the application, a dry-run mode is available. Commands to set it up are in this section.
 
-- [Running Tests](#running-tests)  
+- [Running Tests](#running-tests)
   Commands for running the Hydra Explorer tests.
 
-- [Hydra Node API](#hydra-node-api)  
+- [Hydra Node API](#hydra-node-api)
   A breakdown of Hydra endpoints and events and a description of the API endpoints provided by this project. Also, provides a list of scenarios that may happen inside a Hydra Head and how currently developers have to view the scenarios happening inside a Hydra Head.
 
-- [Code Structure](#code-structure)  
+- [Code Structure](#code-structure)
   An overview of the project's codebase, including key components and directories with descriptions.
 
-- [Hydra Head Architecture](HydraArchitecture.md)  
+- [Hydra Head Architecture](HydraArchitecture.md)
   If you are interested in knowing more about Hydra and its architecture, you can navigate to the `HydraArchitecture.md` file.
+
+- [FAQ](FAQ.md)
+  You can read through frequently asked questions and answers to them in the `FAQ.md` file.
+
+- [Troubleshooting](TROUBLESHOOTING.md)
+  You can read about potential issues and how to solve them in the `TROUBLESHOOTING.md` file.
+  
+- [API docs](API.md)
+  The endpoints are documented in the `API.md` file.
 
 ## Introduction
 
