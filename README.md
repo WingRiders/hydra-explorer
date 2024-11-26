@@ -89,6 +89,8 @@ mix test
 ```
 
 All the exposed API endpoint are tested against a golden test database.
+You can check the contents in priv/repo/test.dev.sqlite3.
+Alternatively you can check out the tests themselves in test/hydra_explorer_web/controllers/api_test.exs
 
 ## Hydra Node API
 
