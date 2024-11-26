@@ -3,6 +3,9 @@
 All endpoints return json and don't accept any parameters. Most endpoints minimally process the data coming from the
 underlying Hydra websocket. If you have any additional questions please refer to the Hydra docs for details.
 
+Here is an example of using the API through Postman:
+https://www.youtube.com/watch?v=2BLCXdHjWrw
+
 ## /api/peers/
 ### Response
 - peers: An object where each key is a peer ID and its value is a timestamp (ISO 8601 format).
