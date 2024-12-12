@@ -68,6 +68,8 @@ Navigate to http://localhost:4000/log
 If you can see the raw log from your Hydra node that means the application is working correctly.
 You can double-check the log using websocat following a tutorial on the hydra: https://hydra.family/head-protocol/unstable/docs/tutorial/
 
+Please note that you need to set up the Elixir toolchain to build and run the application, you can get more info here: https://elixir-lang.org/install.html
+
 ## Running without a Hydra node
 
 It's possible to run the application in a dry mode without an underlying Hydra node connection. That might be useful to
